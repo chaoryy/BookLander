@@ -6,13 +6,15 @@ public class Book {
     private final int id;
     private String name;
     private String author;
+    private String description;
     private String cover;
     private BookStatus status;
 
-    public Book(int id, String name, String author, String cover) {
+    public Book(int id, String name, String author, String description, String cover) {
         this.id = id;
         this.name = name;
         this.author = author;
+        this.description = description;
         this.cover = cover;
         this.status = BookStatus.AVAILABLE;
     }
@@ -51,5 +53,13 @@ public class Book {
 
     public void setStatus(BookStatus status) {
         this.status = status;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
