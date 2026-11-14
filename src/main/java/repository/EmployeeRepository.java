@@ -6,7 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeRepository {
-    private final List<Employee> employees = new ArrayList<>();
+    private List<Employee> employees = new ArrayList<>();
+
+    public EmployeeRepository(List<Employee> employees) {
+        this.employees = employees;
+    }
 
     public Employee getEmployeeById(int id) {
         return employees.stream().filter((employee -> employee.getId() == id))
