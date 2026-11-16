@@ -22,7 +22,7 @@ public class EmployeeRepository {
         return new ArrayList<>(employees);
     }
 
-    public void registerNewEmployee(Employee employee) {
+    public void addNewEmployee(Employee employee) {
         employees.add(employee);
     }
 }

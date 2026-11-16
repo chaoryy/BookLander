@@ -18,8 +18,7 @@ public class BookLoan {
                     int employeeId,
                     LocalDate borrowedDate,
                     LocalDate returnDate,
-                    LocalDate realReturnDate,
-                    BookLoanStatus status
+                    LocalDate realReturnDate
     ) {
         this.id = id;
         this.bookId = bookId;
@@ -27,7 +26,17 @@ public class BookLoan {
         this.borrowedDate = borrowedDate;
         this.returnDate = returnDate;
         this.realReturnDate = realReturnDate;
-        this.status = status;
+        this.status = BookLoanStatus.RETURNED;
+    }
+
+    public BookLoan(int id, int bookId, int employeeId, LocalDate borrowedDate) {
+        this.id = id;
+        this.bookId = bookId;
+        this.employeeId = employeeId;
+        this.borrowedDate = borrowedDate;
+        this.returnDate = borrowedDate.plusDays(14);
+        this.realReturnDate = null;
+        this.status = BookLoanStatus.ACTIVE;
     }
 
     public int getId() {
