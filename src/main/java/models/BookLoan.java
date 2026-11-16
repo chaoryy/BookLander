@@ -3,6 +3,7 @@ package models;
 import models.enums.BookLoanStatus;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 
 public class BookLoan {
     private final int id;
@@ -33,7 +34,7 @@ public class BookLoan {
         this.id = id;
         this.bookId = bookId;
         this.employeeId = employeeId;
-        this.borrowedDate = borrowedDate;
+        this.borrowedDate = LocalDate.now(ZoneId.of("Asia/Bishkek"));
         this.returnDate = borrowedDate.plusDays(14);
         this.realReturnDate = null;
         this.status = BookLoanStatus.ACTIVE;
