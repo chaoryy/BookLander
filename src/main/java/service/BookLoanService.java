@@ -82,7 +82,7 @@ public class BookLoanService {
         Employee employee = getEmployeeOrThrow(employeeId);
         Book book = getBookOrThrow(bookId);
         if (!hasBook(employee, bookId)) {
-            throw new InputMismatchException(employee + "don't have " + book);
+            throw new IllegalStateException(employee + "don't have " + book);
         }
         BookLoan activeLoan = bookLoanRepository.getAllLoans().stream()
                 .filter(bookLoan -> bookLoan.getBookId() == bookId
