@@ -30,7 +30,7 @@ public class BookLoan {
         this.status = BookLoanStatus.RETURNED;
     }
 
-    public BookLoan(int id, int bookId, int employeeId, LocalDate borrowedDate) {
+    public BookLoan(int id, int bookId, int employeeId) {
         this.id = id;
         this.bookId = bookId;
         this.employeeId = employeeId;
