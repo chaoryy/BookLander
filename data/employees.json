@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "Алина Садыкова",
+    "email": "alina.sadykova@office.local",
+    "role": "USER"
+  },
+  {
+    "id": 2,
+    "name": "Тимур Осмонов",
+    "email": "timur.osmonov@office.local",
+    "role": "USER"
+  },
+  {
+    "id": 3,
+    "name": "Элина Токтосунова",
+    "email": "elina.toktosunova@office.local",
+    "role": "ADMIN"
+  },
+  {
+    "id": 4,
+    "name": "Данияр Ибраимов",
+    "email": "daniyar.ibraimov@office.local",
+    "role": "USER"
+  }
+]
