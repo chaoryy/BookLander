@@ -1,7 +1,7 @@
 package models.enums;
 
 public enum BookLoanStatus {
-    ACTIVE ("Active"),
+    AVAILABLE ("Available"),
     RETURNED ("Returned"),
     OVERDUE ("Overdue");
 

@@ -2,7 +2,8 @@ package server.enums;
 
 public enum ResponseCodes {
     OK(200),
-    NOT_FOUND(404);
+    NOT_FOUND(404),
+    SERVER_ERROR(500);
 
     private final int code;
 
