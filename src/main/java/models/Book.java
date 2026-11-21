@@ -69,6 +69,9 @@ public class Book {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", author='" + author + '\'' +
+                ", description='" + description + '\'' +
+                ", cover='" + cover + '\'' +
+                ", status=" + status +
                 '}';
     }
 }
