@@ -90,10 +90,19 @@ public abstract class Server {
         return String.format("%s %s", method.toUpperCase(), route);
     }
 
-    private void respond404(HttpExchange exchange) {
+    protected void respond404(HttpExchange exchange) {
         try {
             byte[] bytes = "404 NOT FOUND".getBytes(StandardCharsets.UTF_8);
             sendByteData(exchange, ResponseCodes.NOT_FOUND, ContentType.TEXT_PLAIN, bytes);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    protected void sendError500(HttpExchange exchange) {
+        try {
+            byte[] bytes = "500 INTERNAL SERVER ERROR".getBytes(StandardCharsets.UTF_8);
+            sendByteData(exchange, ResponseCodes.SERVER_ERROR, ContentType.TEXT_PLAIN, bytes);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -113,5 +122,9 @@ public abstract class Server {
 
     private static void setContentType(HttpExchange exchange, ContentType contentType) {
         exchange.getResponseHeaders().set("Content-Type", String.valueOf(contentType));
+    }
+
+    public final void start() {
+        basicServer.start();
     }
 }

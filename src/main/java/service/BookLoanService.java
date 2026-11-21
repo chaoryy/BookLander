@@ -9,7 +9,6 @@ import repository.BookLoanRepository;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.InputMismatchException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -84,16 +83,9 @@ public class BookLoanService {
         if (!hasBook(employee, bookId)) {
             throw new IllegalStateException(employee + "don't have " + book);
         }
-        BookLoan activeLoan = bookLoanRepository.getAllLoans().stream()
-                .filter(bookLoan -> bookLoan.getBookId() == bookId
-                        && bookLoan.getEmployeeId() == employeeId)
-                .findFirst()
-                .orElse(null);
+        BookLoan activeLoan = bookLoanRepository.getActiveLoanByBookId(bookId);
         if (activeLoan == null) {
             throw new IllegalStateException("Couldn't find loan with employeeID - " + employeeId + " and bookID -" + bookId);
-        }
-        if (BookLoanStatus.ACTIVE != activeLoan.getStatus()) {
-            throw new IllegalStateException("This loan is not active");
         }
         employee.getPrevBooksId().add(bookId);
         employee.getCurrentBooksId().remove(Integer.valueOf(bookId));

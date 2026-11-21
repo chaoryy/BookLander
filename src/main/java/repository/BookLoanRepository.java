@@ -42,7 +42,7 @@ public class BookLoanRepository {
     }
 
     public BookLoan getActiveLoanByBookId(int bookId) {
-        return loans.stream().filter(loan -> loan.getBookId() == bookId && loan.getStatus() == BookLoanStatus.ACTIVE)
+        return loans.stream().filter(loan -> loan.getBookId() == bookId && loan.getStatus() == BookLoanStatus.AVAILABLE)
                 .findFirst()
                 .orElse(null);
     }
