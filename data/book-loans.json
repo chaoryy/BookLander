@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1,
+    "bookId": 101,
+    "employeeId": 1,
+    "borrowedDate": "2026-11-01",
+    "returnDate": "2026-11-22",
+    "realReturnDate": null,
+    "status": "ACTIVE"
+  },
+  {
+    "id": 2,
+    "bookId": 102,
+    "employeeId": 1,
+    "borrowedDate": "2026-09-10",
+    "returnDate": "2026-09-24",
+    "realReturnDate": "2026-09-22",
+    "status": "RETURNED"
+  },
+  {
+    "id": 3,
+    "bookId": 101,
+    "employeeId": 2,
+    "borrowedDate": "2026-08-05",
+    "returnDate": "2026-08-19",
+    "realReturnDate": "2026-08-20",
+    "status": "RETURNED_LATE"
+  },
+  {
+    "id": 4,
+    "bookId": 104,
+    "employeeId": 2,
+    "borrowedDate": "2026-10-01",
+    "returnDate": "2026-10-15",
+    "realReturnDate": "2026-10-12",
+    "status": "RETURNED"
+  },
+  {
+    "id": 5,
+    "bookId": 103,
+    "employeeId": 3,
+    "borrowedDate": "2026-10-20",
+    "returnDate": "2026-11-03",
+    "realReturnDate": null,
+    "status": "OVERDUE"
+  },
+  {
+    "id": 6,
+    "bookId": 105,
+    "employeeId": 3,
+    "borrowedDate": "2026-07-15",
+    "returnDate": "2026-07-29",
+    "realReturnDate": "2026-07-28",
+    "status": "RETURNED"
+  },
+  {
+    "id": 7,
+    "bookId": 106,
+    "employeeId": 3,
+    "borrowedDate": "2026-08-25",
+    "returnDate": "2026-09-08",
+    "realReturnDate": "2026-09-07",
+    "status": "RETURNED"
+  },
+  {
+    "id": 8,
+    "bookId": 105,
+    "employeeId": 4,
+    "borrowedDate": "2026-11-05",
+    "returnDate": "2026-11-19",
+    "realReturnDate": null,
+    "status": "ACTIVE"
+  },
+  {
+    "id": 9,
+    "bookId": 102,
+    "employeeId": 5,
+    "borrowedDate": "2026-10-18",
+    "returnDate": "2026-11-01",
+    "realReturnDate": "2026-10-30",
+    "status": "RETURNED"
+  },
+  {
+    "id": 10,
+    "bookId": 103,
+    "employeeId": 5,
+    "borrowedDate": "2026-09-01",
+    "returnDate": "2026-09-15",
+    "realReturnDate": "2026-09-18",
+    "status": "RETURNED"
+  }
+]

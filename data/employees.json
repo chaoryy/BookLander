@@ -1,26 +1,59 @@
 [
   {
     "id": 1,
-    "name": "Алина Садыкова",
-    "email": "alina.sadykova@office.local",
+    "name": "Liam",
+    "lastName": "Miller",
+    "currentBooksId": [
+      101
+    ],
+    "prevBooksId": [
+      102
+    ],
     "role": "USER"
   },
   {
     "id": 2,
-    "name": "Тимур Осмонов",
-    "email": "timur.osmonov@office.local",
-    "role": "USER"
-  },
-  {
-    "id": 3,
-    "name": "Элина Токтосунова",
-    "email": "elina.toktosunova@office.local",
+    "name": "Sophia",
+    "lastName": "Taylor",
+    "currentBooksId": [],
+    "prevBooksId": [
+      101,
+      104
+    ],
     "role": "ADMIN"
   },
   {
-    "id": 4,
-    "name": "Данияр Ибраимов",
-    "email": "daniyar.ibraimov@office.local",
+    "id": 3,
+    "name": "Noah",
+    "lastName": "Anderson",
+    "currentBooksId": [
+      103
+    ],
+    "prevBooksId": [
+      105,
+      106
+    ],
     "role": "USER"
+  },
+  {
+    "id": 4,
+    "name": "Emma",
+    "lastName": "Wilson",
+    "currentBooksId": [
+      105
+    ],
+    "prevBooksId": [],
+    "role": "USER"
+  },
+  {
+    "id": 5,
+    "name": "Lucas",
+    "lastName": "Brown",
+    "currentBooksId": [],
+    "prevBooksId": [
+      102,
+      103
+    ],
+    "role": "ADMIN"
   }
 ]
