@@ -37,7 +37,7 @@ public class BookLoan {
         this.borrowedDate = LocalDate.now(ZoneId.of("Asia/Bishkek"));
         this.returnDate = borrowedDate.plusDays(14);
         this.realReturnDate = null;
-        this.status = BookLoanStatus.ACTIVE;
+        this.status = BookLoanStatus.AVAILABLE;
     }
 
     public int getId() {
@@ -90,5 +90,18 @@ public class BookLoan {
 
     public void setStatus(BookLoanStatus status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "BookLoan{" +
+                "id=" + id +
+                ", bookId=" + bookId +
+                ", employeeId=" + employeeId +
+                ", borrowedDate=" + borrowedDate +
+                ", returnDate=" + returnDate +
+                ", realReturnDate=" + realReturnDate +
+                ", status=" + status +
+                '}';
     }
 }

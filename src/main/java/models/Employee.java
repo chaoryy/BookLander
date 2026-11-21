@@ -81,6 +81,8 @@ public class Employee {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", currentBooksId=" + currentBooksId +
+                ", prevBooksId=" + prevBooksId +
                 ", role=" + role +
                 '}';
     }
