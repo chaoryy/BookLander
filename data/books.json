@@ -1,0 +1,50 @@
+[
+  {
+    "id": 101,
+    "name": "Clean Code",
+    "author": "Robert C. Martin",
+    "description": "A handbook of agile software craftsmanship covering naming, functions, error handling, and refactoring.",
+    "cover": "https://m.media-amazon.com/images/I/71T7aD3EOTL._SY342_.jpg",
+    "status": "TAKEN"
+  },
+  {
+    "id": 102,
+    "name": "Effective Java",
+    "author": "Joshua Bloch",
+    "description": "Best practices for the Java platform, including generics, concurrency, serialization, and object creation.",
+    "cover": "https://m.media-amazon.com/images/I/515t2W6f5QL._SY445_SX342_QL70_ML2_.jpg",
+    "status": "AVAILABLE"
+  },
+  {
+    "id": 103,
+    "name": "Designing Data-Intensive Applications",
+    "author": "Martin Kleppmann",
+    "description": "The big ideas behind reliable, scalable, and maintainable systems, replication, partitioning, and stream processing.",
+    "cover": "https://m.media-amazon.com/images/I/91YfNb49PLL._AC_UF894,1000_QL80_.jpg",
+    "status": "TAKEN"
+  },
+  {
+    "id": 104,
+    "name": "Java Concurrency in Practice",
+    "author": "Brian Goetz",
+    "description": "Thread safety, executors, task execution, liveness, performance, and testing concurrent Java programs.",
+    "cover": "https://m.media-amazon.com/images/I/41U49RnAkcL._SY445_SX342_ML2_.jpg",
+    "status": "AVAILABLE"
+  },
+  {
+    "id": 105,
+    "name": "Refactoring",
+    "author": "Martin Fowler",
+    "description": "Improving the design of existing code through structured transformations and code smell identification.",
+    "cover": "https://martinfowler.com/books/refact2.jpg",
+    "status": "TAKEN"
+  },
+  {
+    "id": 106,
+    "name": "Domain-Driven Design",
+    "author": "Eric Evans",
+    "description": "Tackling complexity in the heart of software using bounded contexts, aggregates, entities, and domain events.",
+    "cover": "https://cdn.waterstones.com/bookjackets/large/9780/3211/9780321125217.jpg",
+    "status": "AVAILABLE"
+  }
+]

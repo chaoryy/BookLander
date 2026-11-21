@@ -1,0 +1,59 @@
+[
+  {
+    "id": 1,
+    "name": "Liam",
+    "lastName": "Miller",
+    "currentBooksId": [
+      101
+    ],
+    "prevBooksId": [
+      102
+    ],
+    "role": "USER"
+  },
+  {
+    "id": 2,
+    "name": "Sophia",
+    "lastName": "Taylor",
+    "currentBooksId": [],
+    "prevBooksId": [
+      101,
+      104
+    ],
+    "role": "ADMIN"
+  },
+  {
+    "id": 3,
+    "name": "Noah",
+    "lastName": "Anderson",
+    "currentBooksId": [
+      103
+    ],
+    "prevBooksId": [
+      105,
+      106
+    ],
+    "role": "USER"
+  },
+  {
+    "id": 4,
+    "name": "Emma",
+    "lastName": "Wilson",
+    "currentBooksId": [
+      105
+    ],
+    "prevBooksId": [],
+    "role": "USER"
+  },
+  {
+    "id": 5,
+    "name": "Lucas",
+    "lastName": "Brown",
+    "currentBooksId": [],
+    "prevBooksId": [
+      102,
+      103
+    ],
+    "role": "ADMIN"
+  }
+]
