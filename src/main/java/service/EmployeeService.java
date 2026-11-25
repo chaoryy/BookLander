@@ -21,12 +21,12 @@ public class EmployeeService {
         return employeeRepository.getEmployeeById(id);
     }
 
-    public void registerNewEmployee(String name, String lastName, Role role) {
+    public void registerNewEmployee(String name, String lastName, String email, String password, Role role) {
         int id = employeeRepository.getAllEmployees().stream()
                 .mapToInt(Employee::getId)
                 .max()
                 .orElse(0) + 1;
-        employeeRepository.addNewEmployee(new Employee(id, name, lastName, role));
+        employeeRepository.addNewEmployee(new Employee(id, name, lastName, email, password, role));
     }
 
 
