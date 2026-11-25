@@ -31,6 +31,19 @@
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required>
             </div>
+            <div>
+                <label for="role">Role:</label>
+                <select id="role" name="role" required>
+                    <#if roles??>
+                        <#list roles as role>
+                            <option value="${role}">${role.roleName}</option>
+                        </#list>
+                    <#else>
+                        <option value="USER">User</option>
+                        <option value="ADMIN">Admin</option>
+                    </#if>
+                </select>
+            </div>
             <button type="submit">Register</button>
         </form>
     </div>
