@@ -13,10 +13,10 @@ import server.enums.ResponseCodes;
 import service.BookLoanService;
 import service.BookService;
 import service.EmployeeService;
+import utils.UrlParseUtils;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
+import java.io.*;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.HashMap;
@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class BookLenderServer extends Server {
     private final BookService bookService;
@@ -47,6 +48,31 @@ public class BookLenderServer extends Server {
         registerGet("/book", this::bookHandler);
         registerGet("/employee/current", this::currentBooksHandler);
         registerGet("/employee/prev", this::prevBooksHandler);
+        registerGet("/register", this::registerGetHandler);
+        registerPost("/register",this::registerPostHandler);
+    }
+
+    private void registerGetHandler(HttpExchange exchange) {
+        Path path = Path.of("templates", "register.ftlh");
+        sendFile(exchange, path, ContentType.TEXT_HTML);
+    }
+
+    private void registerPostHandler(HttpExchange exchange) {
+        String cType = exchange.getRequestHeaders()
+                .getOrDefault("Content-Type", List.of())
+                .get(0);
+
+        String raw = getBody(exchange);
+        Map<String, String> parsed = UrlParseUtils.parseUrlEncoded(raw, "&");
+        String fmt = "<p>Необработанные данные: <b>%s<b></p>" +
+                "<p>Content-Type: <b>%s<b></p>" +
+                "<p>После обработки: <b>%s<b></p>";
+        String data = String.format(fmt, raw, cType, parsed);
+        try {
+            sendByteData(exchange, ResponseCodes.OK, ContentType.TEXT_HTML, data.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void booksHandler(HttpExchange exchange) {
@@ -123,6 +149,19 @@ public class BookLenderServer extends Server {
                 })
                 .filter(Objects::nonNull)
                 .toList();
+    }
+
+    protected String getBody(HttpExchange exchange) {
+        InputStream inputStream = exchange.getRequestBody();
+        Charset utf8 = StandardCharsets.UTF_8;
+        InputStreamReader isr = new InputStreamReader(inputStream, utf8);
+
+        try (BufferedReader reader = new BufferedReader(isr)){
+            return reader.lines().collect(Collectors.joining(""));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 
     private static Configuration initFreeMarker() {
