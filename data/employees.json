@@ -3,6 +3,8 @@
     "id": 1,
     "name": "Liam",
     "lastName": "Miller",
+    "email": "liam.miller@gmail.com",
+    "password": "liam123",
     "currentBooksId": [
       101
     ],
@@ -15,6 +17,8 @@
     "id": 2,
     "name": "Sophia",
     "lastName": "Taylor",
+    "email": "sophia.taylor@gmail.com",
+    "password": "sophia123",
     "currentBooksId": [],
     "prevBooksId": [
       101,
@@ -26,6 +30,8 @@
     "id": 3,
     "name": "Noah",
     "lastName": "Anderson",
+    "email": "noah.anderson@gmail.com",
+    "password": "noah123",
     "currentBooksId": [
       103
     ],
@@ -39,6 +45,8 @@
     "id": 4,
     "name": "Emma",
     "lastName": "Wilson",
+    "email": "emma.wilson@gmail.com",
+    "password": "emma123",
     "currentBooksId": [
       105
     ],
@@ -49,6 +57,8 @@
     "id": 5,
     "name": "Lucas",
     "lastName": "Brown",
+    "email": "lucas.brown@gmail.com",
+    "password": "lucas123",
     "currentBooksId": [],
     "prevBooksId": [
       102,
