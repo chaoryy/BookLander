@@ -25,7 +25,8 @@ public class EmployeeService {
         return employeeRepository.getEmployeeById(id);
     }
 
-    public void registerNewEmployee(String name, String lastName, String email, String password, Role role) {
+    public void registerNewEmployee(String name, String lastName, String email,
+                                    String password, Role role) throws IllegalArgumentException {
         validate(name, lastName, email, password);
         String cleanEmail = email.trim();
         if (isEmailTaken(cleanEmail)) {
@@ -54,7 +55,7 @@ public class EmployeeService {
         }
     }
 
-    public boolean isEmailTaken(String email) {
+    private boolean isEmailTaken(String email) {
         return getAllEmployees().stream()
                 .anyMatch(employee -> employee.getEmail().equalsIgnoreCase(email.trim()));
     }
