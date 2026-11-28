@@ -37,7 +37,7 @@ public class BookLoan {
         this.borrowedDate = LocalDate.now(ZoneId.of("Asia/Bishkek"));
         this.returnDate = borrowedDate.plusDays(14);
         this.realReturnDate = null;
-        this.status = BookLoanStatus.AVAILABLE;
+        this.status = BookLoanStatus.ACTIVE;
     }
 
     public int getId() {

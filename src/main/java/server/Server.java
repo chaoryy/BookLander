@@ -47,6 +47,10 @@ public abstract class Server {
         getRoutes().put("GET " + route, handler);
     }
 
+    protected final void registerPost(String route, RouteHandler handler) {
+        getRoutes().put("POST " + route, handler);
+    }
+
     protected final void registerFileHandler(String fileExt, ContentType type) {
         registerGet(fileExt, exchange -> sendFile(exchange, makeFilePath(exchange), type));
     }
@@ -106,6 +110,12 @@ public abstract class Server {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    protected void redirect(HttpExchange exchange, String location) throws IOException {
+        exchange.getResponseHeaders().set("Location", location);
+        exchange.sendResponseHeaders(ResponseCodes.SEE_OTHER.getCode(), -1);
+        exchange.close();
     }
 
     protected final void sendByteData(HttpExchange exchange,

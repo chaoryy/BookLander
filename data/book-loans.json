@@ -24,7 +24,7 @@
     "borrowedDate": "2026-08-05",
     "returnDate": "2026-08-19",
     "realReturnDate": "2026-08-20",
-    "status": "RETURNED_LATE"
+    "status": "RETURNED"
   },
   {
     "id": 4,

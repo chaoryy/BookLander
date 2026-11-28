@@ -8,15 +8,16 @@ import freemarker.template.TemplateExceptionHandler;
 import com.sun.net.httpserver.HttpExchange;
 import models.Book;
 import models.Employee;
+import models.enums.Role;
 import server.enums.ContentType;
 import server.enums.ResponseCodes;
 import service.BookLoanService;
 import service.BookService;
 import service.EmployeeService;
+import utils.UrlParseUtils;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
+import java.io.*;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.HashMap;
@@ -24,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class BookLenderServer extends Server {
     private final BookService bookService;
@@ -47,12 +49,74 @@ public class BookLenderServer extends Server {
         registerGet("/book", this::bookHandler);
         registerGet("/employee/current", this::currentBooksHandler);
         registerGet("/employee/prev", this::prevBooksHandler);
+        registerGet("/register", this::registerGetHandler);
+        registerPost("/register", this::registerPostHandler);
+        registerGet("/login",this::loginGetHandler);
+        registerPost("/login", this::loginPostHandler);
+    }
+
+    private void loginGetHandler(HttpExchange exchange) {
+        Map<String, Object> data = new HashMap<>();
+        renderTemplate(exchange, ResponseCodes.OK, "login.ftlh",data);
+    }
+
+    private void loginPostHandler(HttpExchange exchange) {
+        Map<String, Object> data = new HashMap<>();
+        String raw = getBody(exchange);
+        Map<String, String> parsed = UrlParseUtils.parseUrlEncoded(raw, "&");
+        try {
+            String email = validateString(parsed.get("email"));
+            String password = validateString(parsed.get("password"));
+            Employee employee = employeeService.logIn(email, password);
+            redirect(exchange, "/employee");
+        } catch (IllegalArgumentException e) {
+            data.put("error", e.getMessage());
+            renderTemplate(exchange, ResponseCodes.BAD_REQUEST, "login.ftlh", data);
+            return;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void registerGetHandler(HttpExchange exchange) {
+        Map<String, Object> data = new HashMap<>();
+        data.put("roles", Role.values());
+        renderTemplate(exchange, ResponseCodes.OK,"register.ftlh", data);
+    }
+
+    private void registerPostHandler(HttpExchange exchange) {
+        Map<String, Object> data = new HashMap<>();
+        String raw = getBody(exchange);
+        Map<String, String> parsed = UrlParseUtils.parseUrlEncoded(raw, "&");
+        try {
+            String name = validateString(parsed.get("name"));
+            String lastName = validateString(parsed.get("lastName"));
+            String email = validateString(parsed.get("email"));
+            String password = validateString(parsed.get("password"));
+            Role role = Role.getRoleByName(parsed.get("role"));
+            employeeService.registerNewEmployee(name, lastName, email, password, role);
+            redirect(exchange, "/employee");
+        } catch (IllegalArgumentException e) {
+            data.put("error", e.getMessage());
+            data.put("roles", Role.values());
+            renderTemplate(exchange, ResponseCodes.BAD_REQUEST,"register.ftlh", data);
+            return;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private String validateString(String str) {
+        if (str == null || str.isBlank()) {
+            return "";
+        }
+        return str.trim();
     }
 
     private void booksHandler(HttpExchange exchange) {
         Map<String, Object> data = new HashMap<>();
         data.put("books", bookService.getAllBooks());
-        renderTemplate(exchange, "books.ftlh", data);
+        renderTemplate(exchange, ResponseCodes.OK,"books.ftlh", data);
     }
 
     private void bookHandler(HttpExchange exchange) {
@@ -64,7 +128,7 @@ public class BookLenderServer extends Server {
             return;
         }
         data.put("book", book);
-        renderTemplate(exchange, "book.ftlh", data);
+        renderTemplate(exchange, ResponseCodes.OK,"book.ftlh", data);
     }
 
     private void employeeHandler(HttpExchange exchange) {
@@ -74,7 +138,7 @@ public class BookLenderServer extends Server {
             return;
         }
         data.put("employee", employee);
-        renderTemplate(exchange, "employee.ftlh", data);
+        renderTemplate(exchange, ResponseCodes.OK,"employee.ftlh", data);
     }
 
     private void employeeBookHandler(HttpExchange exchange,
@@ -88,7 +152,7 @@ public class BookLenderServer extends Server {
         }
         data.put("employee", employee);
         data.put("books", checkAndGetBooksById(idsExtractor.apply(employee)));
-        renderTemplate(exchange, ftlhName, data);
+        renderTemplate(exchange, ResponseCodes.OK, ftlhName, data);
     }
 
     private void currentBooksHandler(HttpExchange exchange) {
@@ -100,7 +164,7 @@ public class BookLenderServer extends Server {
     }
 
     private Employee checkAndGetEmployeeById(HttpExchange exchange,
-                                         int employeeId) {
+                                             int employeeId) {
         Employee employee = employeeService.getEmployeeById(employeeId);
         if (employee == null) {
             respond404(exchange);
@@ -110,9 +174,9 @@ public class BookLenderServer extends Server {
     }
 
     private List<Book> checkAndGetBooksById(List<Integer> booksIds) {
-       if (booksIds == null || booksIds.isEmpty()) {
-           return List.of();
-       }
+        if (booksIds == null || booksIds.isEmpty()) {
+            return List.of();
+        }
         return booksIds.stream()
                 .map(id -> {
                     Book book = bookService.getBookById(id);
@@ -123,6 +187,19 @@ public class BookLenderServer extends Server {
                 })
                 .filter(Objects::nonNull)
                 .toList();
+    }
+
+    protected String getBody(HttpExchange exchange) {
+        InputStream inputStream = exchange.getRequestBody();
+        Charset utf8 = StandardCharsets.UTF_8;
+        InputStreamReader isr = new InputStreamReader(inputStream, utf8);
+
+        try (BufferedReader reader = new BufferedReader(isr)) {
+            return reader.lines().collect(Collectors.joining(""));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 
     private static Configuration initFreeMarker() {
@@ -146,7 +223,7 @@ public class BookLenderServer extends Server {
         }
     }
 
-    protected void renderTemplate(HttpExchange exchange, String templateFile, Object dataModel) {
+    protected void renderTemplate(HttpExchange exchange, ResponseCodes code, String templateFile, Object dataModel) {
         try {
             // Загружаем шаблон из файла по имени.
             // Шаблон должен находится по пути, указанном в конфигурации
@@ -170,11 +247,13 @@ public class BookLenderServer extends Server {
                 var data = stream.toByteArray();
 
                 // отправляем результат клиенту
-                sendByteData(exchange, ResponseCodes.OK, ContentType.TEXT_HTML, data);
+                sendByteData(exchange, code, ContentType.TEXT_HTML, data);
             }
         } catch (IOException | TemplateException e) {
             e.printStackTrace();
             sendError500(exchange);
         }
     }
+
+
 }
