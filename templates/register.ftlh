@@ -46,7 +46,7 @@
             </div>
             <button type="submit">Register</button>
         </form>
-        <a href="login.ftlh">Already have an account? Log in</a>
+        <a href="/login">Already have an account? Log in</a>
     </div>
 </body>
 </html>

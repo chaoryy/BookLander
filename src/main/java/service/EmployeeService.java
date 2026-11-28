@@ -31,7 +31,7 @@ public class EmployeeService {
         validate(name, lastName, email, password);
         String cleanEmail = email.trim();
         if (isEmailTaken(cleanEmail)) {
-            throw new IllegalArgumentException("Employee with this email already exist");
+            throw new IllegalArgumentException("Employee with this email already exists");
         }
         int id = employeeRepository.getAllEmployees().stream()
                 .mapToInt(Employee::getId)
@@ -57,11 +57,25 @@ public class EmployeeService {
     }
 
     private boolean isEmailTaken(String email) {
-        return getAllEmployees().stream()
-                .anyMatch(employee -> employee.getEmail().equalsIgnoreCase(email.trim()));
+        return employeeRepository.findEmployeeByEmail(email) != null;
     }
 
     public void updateBooks(int id, List<Integer> current, List<Integer> prev) throws IOException {
         employeeRepository.updateBooks(id, current, prev);
+    }
+
+    public Employee logIn(String email, String password) {
+        if (email == null) {
+            throw new IllegalArgumentException("Email can't be null");
+        }
+        if (password == null) {
+            throw new IllegalArgumentException("Password can't be null");
+        }
+        Employee foundEmployee = employeeRepository.findEmployeeByEmail(email);
+        if (foundEmployee != null && password.equals(foundEmployee.getPassword())) {
+            return foundEmployee;
+        } else {
+            throw new IllegalArgumentException("Couldn't log in. Invalid email or password");
+        }
     }
 }

@@ -51,6 +51,31 @@ public class BookLenderServer extends Server {
         registerGet("/employee/prev", this::prevBooksHandler);
         registerGet("/register", this::registerGetHandler);
         registerPost("/register", this::registerPostHandler);
+        registerGet("/login",this::loginGetHandler);
+        registerPost("/login", this::loginPostHandler);
+    }
+
+    private void loginGetHandler(HttpExchange exchange) {
+        Map<String, Object> data = new HashMap<>();
+        renderTemplate(exchange, ResponseCodes.OK, "login.ftlh",data);
+    }
+
+    private void loginPostHandler(HttpExchange exchange) {
+        Map<String, Object> data = new HashMap<>();
+        String raw = getBody(exchange);
+        Map<String, String> parsed = UrlParseUtils.parseUrlEncoded(raw, "&");
+        try {
+            String email = validateString(parsed.get("email"));
+            String password = validateString(parsed.get("password"));
+            Employee employee = employeeService.logIn(email, password);
+            redirect(exchange, "/employee");
+        } catch (IllegalArgumentException e) {
+            data.put("error", e.getMessage());
+            renderTemplate(exchange, ResponseCodes.BAD_REQUEST, "login.ftlh", data);
+            return;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void registerGetHandler(HttpExchange exchange) {
@@ -61,7 +86,6 @@ public class BookLenderServer extends Server {
 
     private void registerPostHandler(HttpExchange exchange) {
         Map<String, Object> data = new HashMap<>();
-
         String raw = getBody(exchange);
         Map<String, String> parsed = UrlParseUtils.parseUrlEncoded(raw, "&");
         try {

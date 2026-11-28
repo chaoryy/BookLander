@@ -3,7 +3,6 @@ package repository;
 import models.Employee;
 import utils.FileUtil;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,8 +48,17 @@ public class EmployeeRepository {
             FileUtil.writeEmployees(employees);
         } catch (IOException e) {
             target.setCurrentBooksId(oldCurrent);
-            target.setPrevBooksId(prev);
+            target.setPrevBooksId(oldPrev);
             throw e;
         }
+    }
+
+    public Employee findEmployeeByEmail(String email) {
+        if (email == null) return null;
+        for (Employee employee : employees) {
+            if (email.equalsIgnoreCase(employee.getEmail()))
+                return employee;
+        }
+        return null;
     }
 }
