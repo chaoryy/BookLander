@@ -9,7 +9,7 @@
 </head>
 <body>
 <div>
-    <h1>Registration</h1>
+    <h1>Log In</h1>
     <#if error??>
     <div> ${error}</div>
 </#if>
