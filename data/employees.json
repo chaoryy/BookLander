@@ -65,5 +65,15 @@
       103
     ],
     "role": "ADMIN"
+  },
+  {
+    "id": 6,
+    "name": "Jack",
+    "lastName": "Smith",
+    "email": "jack.smith@gmail.com",
+    "password": "jack123",
+    "currentBooksId": [],
+    "prevBooksId": [],
+    "role": "USER"
   }
 ]

@@ -4,6 +4,7 @@ import models.Book;
 import models.enums.BookStatus;
 import repository.BookRepository;
 
+import java.io.IOException;
 import java.util.List;
 
 public class BookService {
@@ -21,7 +22,7 @@ public class BookService {
         return bookRepository.getBookById(id);
     }
 
-    public void addNewBook(String name, String author, String description, String cover) {
+    public void addNewBook(String name, String author, String description, String cover) throws IOException {
         int id = bookRepository.getAllBooks().stream()
                 .mapToInt(Book::getId)
                 .max()
@@ -29,7 +30,7 @@ public class BookService {
         bookRepository.addBook(new Book(id, name, author, description, cover));
     }
 
-    public void updateBookStatus(int id, BookStatus status) {
+    public void updateBookStatus(int id, BookStatus status) throws IOException {
         bookRepository.updateStatus(id, status);
     }
 }

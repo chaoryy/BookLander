@@ -2,7 +2,9 @@ package models;
 
 import models.enums.Role;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Employee {
     private final int id;
@@ -22,8 +24,8 @@ public class Employee {
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        this.currentBooksId = currentBooksId;
-        this.prevBooksId = prevBooksId;
+        this.currentBooksId = currentBooksId == null ? new ArrayList<>() : new ArrayList<>(currentBooksId);
+        this.prevBooksId = prevBooksId == null ? new ArrayList<>() : new ArrayList<>(prevBooksId);
         this.role = role;
     }
 
@@ -33,6 +35,8 @@ public class Employee {
         this.lastName = lastName;
         this.email = email;
         this.password = password;
+        this.currentBooksId = new ArrayList<>();
+        this.prevBooksId = new ArrayList<>();
         this.role = role;
     }
 
@@ -61,7 +65,7 @@ public class Employee {
     }
 
     public void setCurrentBooksId(List<Integer> currentBooksId) {
-        this.currentBooksId = currentBooksId;
+        this.currentBooksId = Objects.requireNonNullElseGet(currentBooksId, ArrayList::new);
     }
 
     public List<Integer> getPrevBooksId() {
@@ -69,7 +73,7 @@ public class Employee {
     }
 
     public void setPrevBooksId(List<Integer> prevBooksId) {
-        this.prevBooksId = prevBooksId;
+        this.prevBooksId = Objects.requireNonNullElseGet(prevBooksId, ArrayList::new);
     }
 
     public Role getRole() {

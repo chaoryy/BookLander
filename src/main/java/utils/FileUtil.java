@@ -87,7 +87,7 @@ public class FileUtil {
         try {
             writeToJson(BOOKS_PATH, books);
         } catch (IOException e) {
-            throw new IOException("Could not add new book to" + BOOKS_PATH, e);
+            throw new IOException("Failed to write books to " + BOOKS_PATH, e);
         }
     }
 
@@ -95,7 +95,7 @@ public class FileUtil {
         try {
             writeToJson(EMPLOYEES_PATH, employees);
         } catch (IOException e) {
-            throw new IOException("Could not add new employee to " + EMPLOYEES_PATH, e);
+            throw new IOException("Failed to write employees to " + EMPLOYEES_PATH, e);
         }
     }
 
@@ -103,7 +103,7 @@ public class FileUtil {
         try {
             writeToJson(LOANS_PATH, loans);
         } catch (IOException e) {
-            throw new IOException("Could not add new book loans to " + LOANS_PATH, e);
+            throw new IOException("Failed to write loans to " + LOANS_PATH, e);
         }
     }
 

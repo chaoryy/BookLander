@@ -4,6 +4,7 @@ import models.Employee;
 import models.enums.Role;
 import repository.EmployeeRepository;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -26,7 +27,7 @@ public class EmployeeService {
     }
 
     public void registerNewEmployee(String name, String lastName, String email,
-                                    String password, Role role) throws IllegalArgumentException {
+                                    String password, Role role) throws IllegalArgumentException, IOException {
         validate(name, lastName, email, password);
         String cleanEmail = email.trim();
         if (isEmailTaken(cleanEmail)) {
@@ -58,5 +59,9 @@ public class EmployeeService {
     private boolean isEmailTaken(String email) {
         return getAllEmployees().stream()
                 .anyMatch(employee -> employee.getEmail().equalsIgnoreCase(email.trim()));
+    }
+
+    public void updateBooks(int id, List<Integer> current, List<Integer> prev) throws IOException {
+        employeeRepository.updateBooks(id, current, prev);
     }
 }
