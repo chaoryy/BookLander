@@ -75,5 +75,25 @@
     "currentBooksId": [],
     "prevBooksId": [],
     "role": "USER"
+  },
+  {
+    "id": 7,
+    "name": "Stacy",
+    "lastName": "Fisher",
+    "email": "stacy.fisher@gmail.com",
+    "password": "stacy123",
+    "currentBooksId": [],
+    "prevBooksId": [],
+    "role": "USER"
+  },
+  {
+    "id": 8,
+    "name": "Bobby",
+    "lastName": "Jackson",
+    "email": "bobby.jackson@gmail.com",
+    "password": "bobby123",
+    "currentBooksId": [],
+    "prevBooksId": [],
+    "role": "USER"
   }
 ]

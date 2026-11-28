@@ -53,6 +53,27 @@ public class BookLenderServer extends Server {
         registerPost("/register", this::registerPostHandler);
         registerGet("/login",this::loginGetHandler);
         registerPost("/login", this::loginPostHandler);
+        registerGet("/profile",this::profileGetHandler);
+        registerGet("/register_status", this::registerStatusHandler);
+    }
+
+    private void registerStatusHandler(HttpExchange exchange) {
+        Map<String, Object> data = new HashMap<>();
+        renderTemplate(exchange, ResponseCodes.OK, "/registration_success.ftlh",data);
+    }
+
+    private void profileGetHandler(HttpExchange exchange) {
+        List<Employee> employees = employeeService.getAllEmployees();
+        if (employees.isEmpty()) {
+            respond404(exchange);
+            return;
+        }
+        Map<String, Object> data = new HashMap<>();
+        data.put("employee", employees.get(0));
+        renderTemplate(
+                exchange, ResponseCodes.OK,
+                "employee.ftlh", data
+        );
     }
 
     private void loginGetHandler(HttpExchange exchange) {
@@ -68,13 +89,12 @@ public class BookLenderServer extends Server {
             String email = validateString(parsed.get("email"));
             String password = validateString(parsed.get("password"));
             Employee employee = employeeService.logIn(email, password);
-            redirect(exchange, "/employee");
+            data.put("employee", employee);
+            renderTemplate(exchange, ResponseCodes.OK, "employee.ftlh", data);
         } catch (IllegalArgumentException e) {
             data.put("error", e.getMessage());
             renderTemplate(exchange, ResponseCodes.BAD_REQUEST, "login.ftlh", data);
             return;
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
@@ -93,12 +113,10 @@ public class BookLenderServer extends Server {
             String lastName = validateString(parsed.get("lastName"));
             String email = validateString(parsed.get("email"));
             String password = validateString(parsed.get("password"));
-            Role role = Role.getRoleByName(parsed.get("role"));
-            employeeService.registerNewEmployee(name, lastName, email, password, role);
-            redirect(exchange, "/employee");
+            employeeService.registerNewEmployee(name, lastName, email, password, Role.USER);
+            renderTemplate(exchange, ResponseCodes.OK, "registration_success.ftlh", data);
         } catch (IllegalArgumentException e) {
             data.put("error", e.getMessage());
-            data.put("roles", Role.values());
             renderTemplate(exchange, ResponseCodes.BAD_REQUEST,"register.ftlh", data);
             return;
         } catch (IOException e) {
